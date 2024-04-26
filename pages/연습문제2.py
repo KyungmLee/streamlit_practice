@@ -49,7 +49,7 @@ from matplotlib import font_manager, rc
 
 # font_name = font_manager.FontProperties(fname='c:/Windows/Fonts/malgun.ttf').get_name()
 font_name = 'NanumGothic.ttf'
-rc('font', family=font_name
+rc('font', family=font_name)
 
 def preprocess(df):
     df['분류리스트'] = df.분류.str.split('>')
