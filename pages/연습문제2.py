@@ -127,7 +127,7 @@ def load_data(file_path):
     elif ext == 'csv':
         return pd.read_csv(file_path, encodings=['utf-8','euc-kr'])
 
-def draw_map(year, df, geo):
+def draw_map(year, geo, df):
     map = folium.Map(location=[37.5666, 126.9782], zoom_start=8)
     folium.GeoJson(geo).add_to(map)
     folium.Choropleth(geo_data=geo,
