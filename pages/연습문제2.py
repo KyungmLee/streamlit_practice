@@ -38,6 +38,7 @@ st.pyplot(fig)
 
 ##################################################
 st.divider()
+
 st.subheader('2. kor_news 데이터셋을 이용')
 st.markdown('''분류의 대분류 기준을 선택하면  
 해당 분야의 주요 키워드 20위에 대한 bar chart 표시''')
@@ -89,13 +90,13 @@ def select_top_keywords(df, column= '제목', category='경제', top_n=20):
     cnt_df = word_counts_df(cate_df, column)
     st.markdown(f'{category} 분야 Top{top_n} 키워드')
     st.bar_chart(cnt_df.iloc[:top_n])
-
+'''
 file_path = 'data/kor_news_240326.xlsx'
 news = load_data(file_path)
 categories = news.대분류.unique()
 cate = st.selectbox('분야를 선택하세요', categories)
 select_top_keywords(news, '제목', cate, 20)
-
+'''
 ##############################################
 st.divider()
 st.subheader('3. 경기도인구데이터에 대하여')
