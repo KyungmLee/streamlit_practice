@@ -49,8 +49,7 @@ st.subheader('3. 대분류 컬럼에 대한 빈도 bar chart')
 df = pd.DataFrame(news.대분류.value_counts())
 st.bar_chart(df)
 
-'''
-st.subheader('''4. 제목 컬럼 주요 키워드 20위''')
+# st.subheader('''4. 제목 컬럼 주요 키워드 20위''')
 
 def word_counts_df(df, column_name):
     text = list(df[column_name])
@@ -72,7 +71,7 @@ def word_counts_df(df, column_name):
     tokens_df = pd.DataFrame(pd.Series(tokens_cnt), columns=['Freq'])
     sorted_df = tokens_df.sort_values(by='Freq', ascending=False)
     return sorted_df
-
+'''
 df_econo = news[news['대분류']=='경제']
 df_econo_cnt = word_counts_df(df_econo, '제목')
 st.markdown('경제 분야 Top20 키워드')
