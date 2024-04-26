@@ -118,7 +118,7 @@ def load_geo_json(file_path):
 
 @st.cache_data
 def load_excel_data(file_path):
-    return pd.read_excel(file_path)
+    return pd.read_excel(file_path, index_col='구분')
 
 def load_data(file_path):
     fname, ext = os.path.splitext(file_path)
@@ -143,7 +143,7 @@ file3 = 'data/iris.csv'
 
 geo_gg = load_geo_json(file1)
 df_gg = load_excel_data(file2)
-df_gg.set_index('구분', inplace=True)
+# df_gg.set_index('구분', inplace=True)
 st.dataframe(df_gg)
 
 tab1, tab2, tab3 = st.tabs(['2007년','2015년', '2017년'])
