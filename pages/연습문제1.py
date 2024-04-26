@@ -49,7 +49,7 @@ st.subheader('3. 대분류 컬럼에 대한 빈도 bar chart')
 df = pd.DataFrame(news.대분류.value_counts())
 st.bar_chart(df)
 
-
+'''
 st.subheader('''4. 제목 컬럼 주요 키워드 20위''')
 
 def word_counts_df(df, column_name):
@@ -83,3 +83,4 @@ df_society_cnt = word_counts_df(df_society, '제목')
 st.markdown('정치 분야 Top20 키워드')
 st.bar_chart(df_society_cnt.iloc[:20])
 
+'''
