@@ -110,9 +110,6 @@ import os
 # from utils.map import load_data, load_geo_json, load_excel_data
 # from utils.map import draw_map
 
-
-
-
 @st.cache_data
 def load_geo_json(file_path):
     with open(file_path, encoding='utf-8') as f:
@@ -130,19 +127,19 @@ def load_data(file_path):
     elif ext == 'csv':
         return pd.read_csv(file_path, encodings=['utf-8','euc-kr'])
 
+def draw_map(year, df, geo):
+    map = folium.Map(location=[37.5666, 126.9782], zoom_start=8)
+    folium.GeoJson(geo).add_to(map)
+    folium.Choropleth(geo_data=geo,
+                      data=df[year],
+                      columns=[df.index, df[year]],
+                      key_on='feature.properties.name').add_to(map)
+    st_folium(map, width=600, height=400)
+
 file1 = 'data/경기도행정구역경계.json'
 file2 = 'data/경기도인구데이터.xlsx'
 file3 = 'data/iris.csv'
 # df = load_data(file3)
-
-def draw_map(year):
-    map = folium.Map(location=[37.5666, 126.9782], zoom_start=8)
-    folium.GeoJson(geo_gg).add_to(map)
-    folium.Choropleth(geo_data=geo_gg,
-                      data=df_gg[year],
-                      columns=[df_gg.index, df_gg[year]],
-                      key_on='feature.properties.name').add_to(map)
-    st_folium(map, width=600, height=400)
 
 geo_gg = load_geo_json(file1)
 df_gg = load_excel_data(file2)
@@ -152,11 +149,11 @@ st.dataframe(df_gg)
 tab1, tab2, tab3 = st.tabs(['2007년','2015년', '2017년'])
 
 with tab1:
-    # draw_map(2007, geo_gg, df_gg)
-    draw_map(2007)
+    draw_map(2007, geo_gg, df_gg)
+    # draw_map(2007)
 with tab2:
-    # draw_map(2015,geo_gg, df_gg)
-    draw_map(2015)
+    draw_map(2015,geo_gg, df_gg)
+    # draw_map(2015)
 with tab3:
-    # draw_map(2017, geo_gg, df_gg)
-    draw_map(2017)
+    draw_map(2017, geo_gg, df_gg)
+    # draw_map(2017)
