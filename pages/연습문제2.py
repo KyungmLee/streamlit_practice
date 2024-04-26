@@ -90,13 +90,13 @@ def select_top_keywords(df, column= '제목', category='경제', top_n=20):
     cnt_df = word_counts_df(cate_df, column)
     st.markdown(f'{category} 분야 Top{top_n} 키워드')
     st.bar_chart(cnt_df.iloc[:top_n])
-'''
-file_path = 'data/kor_news_240326.xlsx'
-news = load_data(file_path)
-categories = news.대분류.unique()
-cate = st.selectbox('분야를 선택하세요', categories)
-select_top_keywords(news, '제목', cate, 20)
-'''
+
+# file_path = 'data/kor_news_240326.xlsx'
+# news = load_data(file_path)
+# categories = news.대분류.unique()
+# cate = st.selectbox('분야를 선택하세요', categories)
+# select_top_keywords(news, '제목', cate, 20)
+
 ##############################################
 st.divider()
 st.subheader('3. 경기도인구데이터에 대하여')
@@ -107,42 +107,42 @@ import json
 import folium
 from streamlit_folium import st_folium
 import os
-from utils.map import load_data, load_geo_json, load_excel_data
-from utils.map import draw_map
+# from utils.map import load_data, load_geo_json, load_excel_data
+# from utils.map import draw_map
 
 
 
-#
-# @st.cache_data
-# def load_geo_json(file_path):
-#     with open(file_path, encoding='utf-8') as f:
-#         geo_gg = json.loads(f.read())
-#     return geo_gg
-#
-# @st.cache_data
-# def load_excel_data(file_path):
-#     return pd.read_excel(file_path)
-#
-# def load_data(file_path):
-#     fname, ext = os.path.splitext(file_path)
-#     if ext in ['xlsx', 'xls']:
-#         return pd.read_excel(file_path)
-#     elif ext == 'csv':
-#         return pd.read_csv(file_path, encodings=['utf-8','euc-kr'])
+
+@st.cache_data
+def load_geo_json(file_path):
+    with open(file_path, encoding='utf-8') as f:
+        geo_gg = json.loads(f.read())
+    return geo_gg
+
+@st.cache_data
+def load_excel_data(file_path):
+    return pd.read_excel(file_path)
+
+def load_data(file_path):
+    fname, ext = os.path.splitext(file_path)
+    if ext in ['xlsx', 'xls']:
+        return pd.read_excel(file_path)
+    elif ext == 'csv':
+        return pd.read_csv(file_path, encodings=['utf-8','euc-kr'])
 
 file1 = 'data/경기도행정구역경계.json'
 file2 = 'data/경기도인구데이터.xlsx'
 file3 = 'data/iris.csv'
 # df = load_data(file3)
 
-# def draw_map(year):
-#     map = folium.Map(location=[37.5666, 126.9782], zoom_start=8)
-#     folium.GeoJson(geo_gg).add_to(map)
-#     folium.Choropleth(geo_data=geo_gg,
-#                       data=df_gg[year],
-#                       columns=[df_gg.index, df_gg[year]],
-#                       key_on='feature.properties.name').add_to(map)
-#     st_folium(map, width=600, height=400)
+def draw_map(year):
+    map = folium.Map(location=[37.5666, 126.9782], zoom_start=8)
+    folium.GeoJson(geo_gg).add_to(map)
+    folium.Choropleth(geo_data=geo_gg,
+                      data=df_gg[year],
+                      columns=[df_gg.index, df_gg[year]],
+                      key_on='feature.properties.name').add_to(map)
+    st_folium(map, width=600, height=400)
 
 geo_gg = load_geo_json(file1)
 df_gg = load_excel_data(file2)
@@ -152,8 +152,11 @@ st.dataframe(df_gg)
 tab1, tab2, tab3 = st.tabs(['2007년','2015년', '2017년'])
 
 with tab1:
-    draw_map(2007, geo_gg, df_gg)
+    # draw_map(2007, geo_gg, df_gg)
+    draw_map(2007)
 with tab2:
-    draw_map(2015,geo_gg, df_gg)
+    # draw_map(2015,geo_gg, df_gg)
+    draw_map(2015)
 with tab3:
-    draw_map(2017, geo_gg, df_gg)
+    # draw_map(2017, geo_gg, df_gg)
+    draw_map(2017)
