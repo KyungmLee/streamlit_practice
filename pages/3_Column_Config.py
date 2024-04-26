@@ -275,21 +275,6 @@ st.dataframe(df8,
              })
 
 st.subheader('12. Image Column')
-df9 = pd.DataFrame({
-    'image':[
-            "https://storage.googleapis.com/s4a-prod-share-preview/default/st_app_screenshot_image/5435b8cb-6c6c-490b-9608-799b543655d3/Home_Page.png",
-            "https://storage.googleapis.com/s4a-prod-share-preview/default/st_app_screenshot_image/ef9a7627-13f2-47e5-8f65-3f69bb38a5c2/Home_Page.png",
-            "https://storage.googleapis.com/s4a-prod-share-preview/default/st_app_screenshot_image/31b99099-8eae-4ff8-aa89-042895ed3843/Home_Page.png",
-            "https://storage.googleapis.com/s4a-prod-share-preview/default/st_app_screenshot_image/6a399b09-241e-4ae7-a31f-7640dc1d181e/Home_Page.png",
-        ],
-    'png_image':[
-        'https://drive.google.com/drive/folders/14MNt_8s5VBcBW_9fEeOSHqQjYE7KgQTb/apple.png',
-        'https://drive.google.com/file/d/1i5j96MsFZtV8p0CcfY0EL89EL8d8vF7j/view?usp=drive_link',
-        'https://drive.google.com/file/d/1VcBDJAkTCsR22I5hm-h5PPdNrs3jMuf7/view?usp=drive_link',
-        'https://drive.google.com/file/d/1KIhNV0C9BEYA5C1dEt9iA-EMIgl1P0EV/view?usp=drive_link'
-    ]
-    }
-)
 
 df9 = pd.DataFrame({
     'image':[
@@ -299,10 +284,10 @@ df9 = pd.DataFrame({
             "https://storage.googleapis.com/s4a-prod-share-preview/default/st_app_screenshot_image/6a399b09-241e-4ae7-a31f-7640dc1d181e/Home_Page.png",
         ],
     'png_image':[
-        'http://localhost:8501/app/static/apple.png',
-        'http://localhost:8501/app/static/banana.png',
-        'http://localhost:8501/app/static/mango.png',
-        'http://localhost:8501/app/static/FuBao.png'
+        'static/apple.png',
+        'static/banana.png',
+        'static/mango.png',
+        'static/FuBao.png'
     ]
     }
 )
@@ -310,7 +295,7 @@ df9 = pd.DataFrame({
 st.dataframe(df9,
              column_config={
                  'image':st.column_config.ImageColumn(),
-                 'png_image':st.column_config.LinkColumn()
+                 'png_image':st.column_config.ImageColumn()
              })
 
 
