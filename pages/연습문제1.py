@@ -10,7 +10,9 @@ from konlpy.tag import Okt, Kkma
 from collections import Counter
 import streamlit as st
 
-font_name = font_manager.FontProperties(fname='c:/Windows/Fonts/malgun.ttf').get_name()
+
+# font_name = font_manager.FontProperties(fname='c:/Windows/Fonts/malgun.ttf').get_name()
+font_name = 'NanumGothic.ttf'
 rc('font', family=font_name)
 
 st.header('연습문제')
