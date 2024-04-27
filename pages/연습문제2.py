@@ -105,7 +105,7 @@ st.markdown('''연도별 인구수에 대한 지도시각화
 
 import json
 import folium
-from streamlit_folium import st_folium, folium_staic
+from streamlit_folium import st_folium, folium_static
 import os
 # from utils.map import load_data, load_geo_json, load_excel_data
 # from utils.map import draw_map
