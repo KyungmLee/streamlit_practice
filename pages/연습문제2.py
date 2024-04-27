@@ -105,7 +105,7 @@ st.markdown('''연도별 인구수에 대한 지도시각화
 
 import json
 import folium
-from streamlit_folium import st_folium
+from streamlit_folium import st_folium, folium_staic
 import os
 # from utils.map import load_data, load_geo_json, load_excel_data
 # from utils.map import draw_map
@@ -131,10 +131,12 @@ def draw_map(year, geo, df):
     map = folium.Map(location=[37.5666, 126.9782], zoom_start=8)
     folium.GeoJson(geo).add_to(map)
     folium.Choropleth(geo_data=geo,
-                      data=df[year],
+                      data=df,
                       columns=[df.index, df[year]],
                       key_on='feature.properties.name').add_to(map)
-    st_folium(map, width=600, height=400)
+    # st_folium(map, width=600, height=400)
+    folium_static(map, width=600, height=400)
+    
 
 file1 = 'data/경기도행정구역경계.json'
 file2 = 'data/경기도인구데이터.xlsx'
