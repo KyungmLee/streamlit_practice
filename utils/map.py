@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import streamlit as st
 import folium
-from streamlit_folium import st_folium
+from streamlit_folium import st_folium, folium_static
 
 
 @st.cache_data
@@ -30,4 +30,6 @@ def draw_map(year, geo, df):
                       data=df[year],
                       columns=[df.index, df[year]],
                       key_on='feature.properties.name').add_to(map)
-    st_folium(map, width=600, height=400)
+    # st_folium(map, width=600, height=400)
+    folium_static(map, width=600, height=400)
+    
