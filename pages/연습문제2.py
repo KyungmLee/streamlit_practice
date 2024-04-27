@@ -131,7 +131,7 @@ def draw_map(year, geo, df):
     map = folium.Map(location=[37.5666, 126.9782], zoom_start=8)
     folium.GeoJson(geo).add_to(map)
     folium.Choropleth(geo_data=geo,
-                      data=df,
+                      data=df[year],
                       columns=[df.index, df[year]],
                       key_on='feature.properties.name').add_to(map)
     # st_folium(map, width=600, height=400)
