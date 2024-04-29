@@ -1,6 +1,13 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import json
+import folium
+from streamlit_folium import st_folium, folium_static
+import os
+# from utils.map import load_data, load_geo_json, load_excel_data
+# from utils.map import draw_map
+import pickle
 
 st.header('연습문제#2')
 st.subheader('1. iris 데이터셋을 이용')
@@ -94,13 +101,6 @@ st.divider()
 st.subheader('3. 경기도인구데이터에 대하여')
 st.markdown('''연도별 인구수에 대한 지도시각화  
    2007년, 2015년, 2017년 연도를 탭으로 제시''')
-
-import json
-import folium
-from streamlit_folium import st_folium, folium_static
-import os
-# from utils.map import load_data, load_geo_json, load_excel_data
-# from utils.map import draw_map
 
 @st.cache_data
 def load_geo_json(file_path):
