@@ -9,6 +9,7 @@ from matplotlib import font_manager, rc
 from konlpy.tag import Okt, Kkma
 from collections import Counter
 import streamlit as st
+import pickle
 
 
 # font_name = font_manager.FontProperties(fname='c:/Windows/Fonts/malgun.ttf').get_name()
@@ -51,8 +52,8 @@ st.bar_chart(df)
 
 # st.subheader('''4. 제목 컬럼 주요 키워드 20위''')
 
-def word_counts_df(df, column_name):
-    text = list(df[column_name])
+def word_counts_df(df, column='제목', category='경제'):
+    text = list(df[column])
     okt = Okt()
     token_pos = [okt.pos(word) for word in text]
 
@@ -71,15 +72,26 @@ def word_counts_df(df, column_name):
     tokens_df = pd.DataFrame(pd.Series(tokens_cnt), columns=['Freq'])
     sorted_df = tokens_df.sort_values(by='Freq', ascending=False)
     return sorted_df
-'''
-df_econo = news[news['대분류']=='경제']
-df_econo_cnt = word_counts_df(df_econo, '제목')
+
+def word_counts_df2(df, column='제목', category='경제'):
+    idx = list(df[df['대분류'] == category].index)
+    pos_path = f'data/{column}_tokenList.p'
+    with open(pos_path, 'rb') as f:
+        token_list = pickle.load(f)
+    token_lists = [token_list[i] for i in idx]
+    tokens = np.hstack(token_lists)
+    tokens_cnt = Counter(tokens)
+    tokens_df = pd.DataFrame(pd.Series(tokens_cnt), columns=['Freq'])
+    sorted_df = tokens_df.sort_values(by='Freq', ascending=False)
+    return sorted_df
+
+# df_econo = news[news['대분류']=='경제']
+df_econo_cnt = word_counts_df2(news, '제목', '경제')
 st.markdown('경제 분야 Top20 키워드')
 st.bar_chart(df_econo_cnt.iloc[:20])
 
-df_society = news[news['대분류']=='사회']
-df_society_cnt = word_counts_df(df_society, '제목')
+# df_society = news[news['대분류']=='사회']
+df_society_cnt = word_counts_df2(news, '제목', '사회')
 st.markdown('정치 분야 Top20 키워드')
 st.bar_chart(df_society_cnt.iloc[:20])
 
-'''
