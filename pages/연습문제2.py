@@ -73,7 +73,6 @@ def load_data(file_path):
 
 def word_counts_df(df, column_name='제목', category='경제'):
     idx = list(df[df['대분류'] == category].index)
-    print(idx)
     pos_path = f'data/{column}_tokenList.p'
     with open(pos_path, 'rb') as f:
         token_list = pickle.load(f)
