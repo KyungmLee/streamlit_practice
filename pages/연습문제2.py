@@ -39,9 +39,9 @@ st.pyplot(fig)
 ##################################################
 st.divider()
 
-st.subheader('2. kor_news 데이터셋을 이용')
-st.markdown('''분류의 대분류 기준을 선택하면  
-해당 분야의 주요 키워드 20위에 대한 bar chart 표시''')
+# st.subheader('2. kor_news 데이터셋을 이용')
+# st.markdown('''분류의 대분류 기준을 선택하면  
+# 해당 분야의 주요 키워드 20위에 대한 bar chart 표시''')
 
 import numpy as np
 from konlpy.tag import Okt
@@ -64,22 +64,14 @@ def load_data(file_path):
     df = pd.read_excel(file_path)
     return preprocess(df)
 
-def word_counts_df(df, column_name):
-    text = list(df[column_name])
-    okt = Okt()
-    token_pos = [okt.pos(word) for word in text]
-
-    token_list = []
-    for token_tag in token_pos:
-        result = []
-        for token, tag in token_tag:
-            if (len(token) > 1) and (tag not in ['Punctuation',
-                                                 'Josa', 'Number',
-                                                 'Suffix', 'Foreign']):
-                result.append(token)
-        token_list.append(result)
-
-    tokens = np.hstack(token_list)
+def word_counts_df(df, column_name='제목', category='경제'):
+    idx = list(df[df['대분류'] == category].index)
+    print(idx)
+    pos_path = f'data/{column}_tokenList.p'
+    with open(pos_path, 'rb') as f:
+        token_list = pickle.load(f)
+    token_lists = [token_list[i] for i in idx]
+    tokens = np.hstack(token_lists)
     tokens_cnt = Counter(tokens)
     tokens_df = pd.DataFrame(pd.Series(tokens_cnt), columns=['Freq'])
     sorted_df = tokens_df.sort_values(by='Freq', ascending=False)
@@ -87,7 +79,7 @@ def word_counts_df(df, column_name):
 
 def select_top_keywords(df, column= '제목', category='경제', top_n=20):
     cate_df = df[df['대분류']==category]
-    cnt_df = word_counts_df(cate_df, column)
+    cnt_df = word_counts_df(cate_df, column, category)
     st.markdown(f'{category} 분야 Top{top_n} 키워드')
     st.bar_chart(cnt_df.iloc[:top_n])
 
