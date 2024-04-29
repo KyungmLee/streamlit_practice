@@ -6,7 +6,7 @@ import folium
 from streamlit_folium import st_folium, folium_static
 import os
 import pickle
-from utils.map import load_data, load_geo_json, load_excel_data
+# from utils.map import load_data, load_geo_json, load_excel_data
 from utils.map import draw_map
 
 
@@ -102,15 +102,15 @@ st.subheader('3. 경기도인구데이터에 대하여')
 st.markdown('''연도별 인구수에 대한 지도시각화  
    2007년, 2015년, 2017년 연도를 탭으로 제시''')
 
-# @st.cache_data
-# def load_geo_json(file_path):
-#     with open(file_path, encoding='utf-8') as f:
-#         geo_gg = json.loads(f.read())
-#     return geo_gg
+@st.cache_data
+def load_geo_json(file_path):
+    with open(file_path, encoding='utf-8') as f:
+        geo_gg = json.loads(f.read())
+    return geo_gg
 
-# @st.cache_data
-# def load_excel_data(file_path):
-#     return pd.read_excel(file_path, index_col='구분')
+@st.cache_data
+def load_excel_data(file_path):
+    return pd.read_excel(file_path, index_col='구분')
 
 # def load_data(file_path):
 #     fname, ext = os.path.splitext(file_path)
