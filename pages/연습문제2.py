@@ -134,7 +134,7 @@ def draw_wordCloud(df, column='제목', category='경제'):
     token_lists = [token_list[i] for i in idx]
     tokens = np.hstack(token_lists)
     tokens_cnt = Counter(tokens)
-    wordcloud = WordCloud().generate_from_frequencies(tokens_cnt)
+    wordcloud = WordCloud(font_path = 'fonts/NanumGothic.ttf').generate_from_frequencies(tokens_cnt)
     fig, ax = plt.subplots()
     ax.axis('off')
     ax.imshow(wordcloud, interpolation='bilinear')
