@@ -145,7 +145,7 @@ news = load_data(file_path)
 categories = news.대분류.unique()
 cate = st.selectbox('분야를 선택하세요', categories)
 select_top_keywords(news, '제목', cate, 20)
-# draw_wordCloud(news, '제목', cate)
+draw_wordCloud(news, '제목', cate)
 
 ##############################################
 st.divider()
