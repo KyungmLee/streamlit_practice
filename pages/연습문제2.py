@@ -84,17 +84,68 @@ def word_counts_df(df, column='제목', category='경제'):
     sorted_df = tokens_df.sort_values(by='Freq', ascending=False)
     return sorted_df
 
+import pickle
+
+# 토큰화된 결과를 객체 파일로 저장
+def token_list_for_column(df, column_name):
+    text = list(df[column_name])
+    okt = Okt()
+    token_pos = [okt.pos(word) for word in text]
+    token_list = []
+    for token_tag in token_pos:
+        result = []
+        for token, tag in token_tag:
+            if (len(token) > 1) and (tag not in ['Punctuation',
+                                                 'Josa', 'Number',
+                                                 'Suffix', 'Foreign']):
+                result.append(token)
+        token_list.append(result)
+
+    with open(f'data/{column_name}_tokenList.p', 'wb') as f:
+        pickle.dump(token_list, f)
+
+# 토큰화된 객체파일 tokenList를 이용
+def word_counts_df2(df, column='제목', category='경제'):
+    idx = list(df[df['대분류'] == category].index)
+    pos_path = f'data/{column}_tokenList.p'
+    with open(pos_path, 'rb') as f:
+        token_list = pickle.load(f)
+    token_lists = [token_list[i] for i in idx]
+    tokens = np.hstack(token_lists)
+    tokens_cnt = Counter(tokens)
+    tokens_df = pd.DataFrame(pd.Series(tokens_cnt), columns=['Freq'])
+    sorted_df = tokens_df.sort_values(by='Freq', ascending=False)
+    return sorted_df
+
 def select_top_keywords(df, column= '제목', category='경제', top_n=20):
-    cate_df = df[df['대분류']==category]
-    cnt_df = word_counts_df(cate_df, column, category)
+    # cate_df = df[df['대분류']==category]
+    # cnt_df = word_counts_df(cate_df, column)
+    cnt_df = word_counts_df2(df, column, category)
     st.markdown(f'{category} 분야 Top{top_n} 키워드')
     st.bar_chart(cnt_df.iloc[:top_n])
+
+from wordcloud import WordCloud
+
+def draw_wordCloud(df, column='제목', category='경제'):
+    idx = list(df[df['대분류'] == category].index)
+    pos_path = f'data/{column}_tokenList.p'
+    with open(pos_path, 'rb') as f:
+        token_list = pickle.load(f)
+    token_lists = [token_list[i] for i in idx]
+    tokens = np.hstack(token_lists)
+    tokens_cnt = Counter(tokens)
+    wordcloud = WordCloud(font_path='NanumGothic.ttf').generate_from_frequencies(tokens_cnt)
+    fig, ax = plt.subplots()
+    ax.axis('off')
+    ax.imshow(wordcloud, interpolation='bilinear')
+    st.pyplot(fig)
 
 file_path = 'data/kor_news_240326.xlsx'
 news = load_data(file_path)
 categories = news.대분류.unique()
 cate = st.selectbox('분야를 선택하세요', categories)
 select_top_keywords(news, '제목', cate, 20)
+# draw_wordCloud(news, '제목', cate)
 
 ##############################################
 st.divider()
